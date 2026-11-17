@@ -72,7 +72,7 @@ async function carregarSelects(servidorDw3) {
         var piquetes = await buscarListaFormAlocado(servidorDw3, '/getAllPiquete');
         preencherSelectAlocado('piqueteidfk', piquetes, 'piqueteid', 'descricao');
     } catch (error) {
-        console.error('Piquete indisponível (módulo da Maria Julia).', error);
+        console.error('Não foi possível carregar os piquetes.', error);
     }
 }
 

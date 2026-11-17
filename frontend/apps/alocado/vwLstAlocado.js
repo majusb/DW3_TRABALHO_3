@@ -42,7 +42,7 @@ async function carregarAlocado(servidorDw3, alertBox) {
                 mapaPiquete[p.piqueteid] = p.descricao;
             });
         } catch (e) {
-            console.error('Piquete indisponível (módulo da Maria Julia).', e);
+            console.error('Não foi possível carregar os piquetes.', e);
         }
 
         inicializarTabelaAlocado(alocados, mapaAnimal, mapaPiquete);
