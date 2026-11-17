@@ -1,4 +1,4 @@
-### teste de login (usuário criado pelo clinicaDatabase.sql: girl/girl)
+### teste de login (usuário criado pelo pastejoDatabase.sql: girl/girl)
 POST http://localhost:40000/Login HTTP/1.1
 content-type: application/json
 

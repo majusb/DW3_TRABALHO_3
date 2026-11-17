@@ -14,7 +14,7 @@ const Login = async (req, res, next) => {
     return res.status(403).json({ message: "Usuário não identificado!" });
   }
 
-  // 2) compara a senha digitada com o hash bcrypt gravado pelo clinicaDatabase.sql
+  // 2) compara a senha digitada com o hash bcrypt gravado pelo pastejoDatabase.sql
   //    (crypt('girl', gen_salt('bf')) no Postgres gera um hash compatível com bcryptjs)
   if (bCrypt.compareSync(req.body.password, credencial[0].password)) {
     //auth ok
