@@ -1,0 +1,50 @@
+### Necessário para pegar o token
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "girl",
+    "password": "girl"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.$.token}}
+
+### teste de inserção de animal
+POST http://localhost:40000/insertAnimal HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "nome": "Mimosa",
+    "datanasc": "2022-03-15",
+    "removido": false
+}
+
+### teste de buscar todos os animais
+GET http://localhost:40000/getAllAnimal HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+### teste de buscar animal por ID
+GET http://localhost:40000/getAnimalByID/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+### teste de atualizar o animal
+PUT http://localhost:40000/updateAnimal/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "nome": "Mimosa II",
+    "datanasc": "2021-10-01",
+    "removido": false
+}
+
+### teste de remover (soft delete) o animal
+DELETE http://localhost:40000/deleteAnimal/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}

@@ -1,0 +1,54 @@
+### Necessário para pegar o token
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "girl",
+    "password": "girl"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.$.token}}
+
+### teste de inserção de alocado (animalidifk e piqueteidfk precisam existir)
+POST http://localhost:40000/insertAlocado HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "animalidifk": 1,
+    "piqueteidfk": 1,
+    "datainicio": "2026-06-01",
+    "datafinal": "2026-06-10",
+    "removido": false
+}
+
+### teste de buscar todos os alocados
+GET http://localhost:40000/getAllAlocado HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+### teste de buscar alocado por ID
+GET http://localhost:40000/getAlocadoByID/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+### teste de atualizar o alocado
+PUT http://localhost:40000/updateAlocado/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "animalidifk": 1,
+    "piqueteidfk": 2,
+    "datainicio": "2026-06-11",
+    "datafinal": "2026-06-20",
+    "removido": false
+}
+
+### teste de remover (soft delete) o alocado
+DELETE http://localhost:40000/deleteAlocado/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
