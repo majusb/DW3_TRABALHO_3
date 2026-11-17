@@ -5,9 +5,6 @@ const routerApp = express.Router();
 const appAnimal = require("../apps/animal/controller/ctlAnimal");
 const appAlocado = require("../apps/alocado/controller/ctlAlocado");
 const appLogin = require("../apps/login/controller/ctlLogin");
-// Maria Julia: descomente quando criar os módulos
-// const appPasto = require("../apps/pasto/controller/ctlPasto");
-// const appPiquete = require("../apps/piquete/controller/ctlPiquete");
 
     routerApp.use((req, res, next) => {
     next();
@@ -30,8 +27,6 @@ const appLogin = require("../apps/login/controller/ctlLogin");
     routerApp.post("/insertAlocado", appLogin.AutenticaJWT, appAlocado.InsertAlocado);
     routerApp.put("/updateAlocado/:alocadoid", appLogin.AutenticaJWT, appAlocado.UpdateAlocado);
     routerApp.delete("/deleteAlocado/:alocadoid", appLogin.AutenticaJWT, appAlocado.DeleteAlocado);
-
-    //@ Rotas de Pasto e Piquete: Maria Julia
 
     // Rota Login
     routerApp.post("/Login", appLogin.Login);
