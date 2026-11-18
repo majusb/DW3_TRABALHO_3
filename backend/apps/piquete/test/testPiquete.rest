@@ -12,17 +12,21 @@ content-type: application/json
 @accessToken = {{loginAutenticado.response.body.$.token}}
 
 ### teste de inserção de piquete
+### verificar da latitude e longitude do piquete, se estão dentro da área do pasto
+### verificar se a latitude existe
 POST http://localhost:40000/insertPiquete HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-    "nomePasto": "Pasto 1",
-    "areatotal": 120.0
+    "descricao": "Piquete 1",
+    "latitude": 100.0,
+    "longitude": 50.0,
+    "pastoId": 1,
 }
 
-### teste de buscar todos os medicos
-GET http://localhost:40000/getAllMedico HTTP/1.1
+### teste de buscar todos os piquetes
+GET http://localhost:40000/getAllPiquetes HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -30,23 +34,22 @@ Authorization: Bearer {{accessToken}}
 
 }
 
-### teste de buscar medico por ID
-GET http://localhost:40000/getMedicoByID/1 HTTP/1.1
+### teste de buscar piquete por ID
+GET http://localhost:40000/getPiqueteByID/1 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{accessToken}}
 
 
-### teste de atualizar o medico
-PUT http://localhost:40000/updateMedico/1 HTTP/1.1
+### teste de atualizar o piquete
+PUT http://localhost:40000/updatePiquete/1 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-    "crm": "123456-SP",
-    "nomeMedico": "Carlos Silva Rocha Segundo",
-    "telefone": "(11)98765-4321",
-    "especialidade": "Cardiologia Infantil",
-    "deleted": false
+    "descricao": "Piquete 1",
+    "latitude": 100.0,
+    "longitude": 50.0,
+    "pastoId": 1
 }
 
 ### teste de atualização de medico

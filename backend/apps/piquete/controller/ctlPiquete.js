@@ -1,45 +1,45 @@
-    const mdlMedico = require("../model/mdlMedico");
+    const mdlPiquete = require("../model/mdlPiquete");
 
-    const GetAllMedico = (req, res) =>
+    const GetAllPiquete = (req, res) =>
     (async () => {
-        let registro = await mdlMedico.GetAllMedico();
+        let registro = await mdlPiquete.GetAllPiquete();
         res.json({ status: "ok", "registro": registro });
     })();
 
-    const GetMedicoByID = (req, res) =>
+    const GetPiqueteByID = (req, res) =>
     (async () => {
-        const idMedico = parseInt(req.params.medicoid);
-        let registro = await mdlMedico.GetMedicoByID(idMedico);
+        const idPiquete = parseInt(req.params.piquetoid);
+        let registro = await mdlPiquete.GetPiqueteByID(idPiquete);
 
         res.json({ status: "ok", "registro": registro });
     })();
 
-    const InsertMedico = (request, res) =>
+    const InsertPiquete = (request, res) =>
     (async () => {
-        const medicoREG = request.body;
-        let { msg, linhasAfetadas } = await mdlMedico.InsertMedico(medicoREG);
+        const piqueteREG = request.body;
+        let { msg, linhasAfetadas } = await mdlPiquete.InsertPiquete(piqueteREG);
         res.json({ "status": msg, "linhasAfetadas": linhasAfetadas });
     })();
 
-    const UpdateMedico = (request, res) =>
+    const UpdatePiquete = (request, res) =>
     (async () => {
-        const idMedico = parseInt(request.params.medicoid);
-        const medicoREG = request.body;
-        let { msg, linhasAfetadas } = await mdlMedico.UpdateMedico(idMedico, medicoREG);
+        const idPiquete = parseInt(request.params.piquetoid);
+        const piqueteREG = request.body;
+        let { msg, linhasAfetadas } = await mdlPiquete.UpdatePiquete(idPiquete, piqueteREG);
         res.json({ "status": msg, "linhasAfetadas": linhasAfetadas });
     })();
 
-    const DeleteMedico = (request, res) =>
+    const DeletePiquete = (request, res) =>
     (async () => {
-        const idMedico = parseInt(request.params.medicoid);
-        let { msg, linhasAfetadas } = await mdlMedico.DeleteMedico(idMedico);
+        const idPiquete = parseInt(request.params.piqueteid);
+        let { msg, linhasAfetadas } = await mdlPiquete.DeletePiquete(idPiquete);
         res.json({ "status": msg, "linhasAfetadas": linhasAfetadas });
     })();
 
     module.exports = {
-    GetAllMedico,
-    GetMedicoByID,
-    InsertMedico,
-    UpdateMedico,
-    DeleteMedico,
+    GetAllPiquete,
+    GetPiqueteByID,
+    InsertPiquete,
+    UpdatePiquete,
+    DeletePiquete,
     };

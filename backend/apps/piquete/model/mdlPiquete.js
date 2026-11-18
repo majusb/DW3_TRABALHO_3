@@ -3,88 +3,88 @@ const db = require("../../../database/databaseconfig");
 const GetAllPiquete = async () => {
     return (
         await db.query(
-            "SELECT * FROM medico WHERE deleted = false ORDER BY nomeMedico ASC"
+            "SELECT * FROM piquete WHERE deleted = false ORDER BY descricao ASC"
         )
     ).rows;
 };
 
-const GetMedicoByID = async (medicoIDPar) => {
+const GetPiqueteByID = async (piqueteIDPar) => {
     return (
         await db.query(
-            "SELECT * FROM medico WHERE idMedico = $1 AND deleted = false ORDER BY nomeMedico ASC",
-            [medicoIDPar]
+            "SELECT * FROM piquete WHERE idPiquete = $1 AND deleted = false ORDER BY descricao ASC",
+            [piqueteIDPar]
         )
     ).rows;
 };
 
-const InsertMedico = async (medicoREGPar) => {
+const InsertPiquete = async (piqueteREGPar) => {
     let linhasAfetadas;
     let msg = "ok";
     try {
         linhasAfetadas = (
             await db.query(
-                "INSERT INTO medico VALUES (default, $1, $2, $3, $4, $5)",
+                "INSERT INTO piquete VALUES (default, $1, $2, $3, $4, $5)",
                 [
-                    medicoREGPar.crm,
-                    medicoREGPar.nomeMedico,
-                    medicoREGPar.telefone,
-                    medicoREGPar.especialidade,
-                    medicoREGPar.deleted,
+                    piqueteREGPar.descricao,
+                    piqueteREGPar.latitude,
+                    piqueteREGPar.longitude,
+                    piqueteREGPar.pastoId,
+                    piqueteREGPar.deleted
                 ]
             )
         ).rowCount;
     } catch (error) {
-        msg = "[mdlMedico|InsertMedico] " + error.detail;
+        msg = "[mdlPiquete|InsertPiquete] " + error.detail;
         linhasAfetadas = -1;
     }
 
     return { msg, linhasAfetadas };
 };
 
-const UpdateMedico = async (medicoIDPar, medicoREGPar) => {
+const UpdatePiquete = async (piqueteIDPar, piqueteREGPar) => {
     let linhasAfetadas;
     let msg = "ok";
     try {
         linhasAfetadas = (
             await db.query(
-                "UPDATE medico SET " +
-                "nomeMedico = $2, " +
-                "especialidade = $3, " +
-                "crm = $4, " +
-                "telefone = $5, " +
+                "UPDATE piquete SET " +
+                "descricao = $2, " +
+                "latitude = $3, " +
+                "longitude = $4, " +
+                "pastoId = $5, " +
                 "deleted = $6 " +
-                "WHERE idMedico = $1",
+                "WHERE idPiquete = $1",
                 [
-                    medicoIDPar,
-                    medicoREGPar.nomeMedico,
-                    medicoREGPar.especialidade,
-                    medicoREGPar.crm,
-                    medicoREGPar.telefone,
-                    medicoREGPar.deleted,
+                    piqueteIDPar,
+                    piqueteREGPar.descricao,
+                    piqueteREGPar.latitude,
+                    piqueteREGPar.longitude,
+                    piqueteREGPar.pastoId,
+                    piqueteREGPar.deleted,
                 ]
             )
         ).rowCount;
     } catch (error) {
-        msg = "[mdlMedico|UpdateMedico] " + error.detail;
+        msg = "[mdlPiquete|UpdatePiquete] " + error.detail;
         linhasAfetadas = -1;
     }
 
     return { msg, linhasAfetadas };
 };
 
-const DeleteMedico = async (medicoIDPar) => {
+const DeletePiquete = async (piqueteIDPar) => {
     let linhasAfetadas;
     let msg = "ok";
 
     try {
         linhasAfetadas = (
             await db.query(
-                "UPDATE medico SET deleted = true WHERE idMedico = $1",
-                [medicoIDPar]
+                "UPDATE piquete SET deleted = true WHERE idPiquete = $1",
+                [piqueteIDPar]
             )
         ).rowCount;
     } catch (error) {
-        msg = "[mdlMedico|DeleteMedico] " + error.detail;
+        msg = "[mdlPiquete|DeletePiquete] " + error.detail;
         linhasAfetadas = -1;
     }
 
@@ -92,9 +92,9 @@ const DeleteMedico = async (medicoIDPar) => {
 };
 
 module.exports = {
-    GetAllMedico,
-    GetMedicoByID,
-    InsertMedico,
-    UpdateMedico,
-    DeleteMedico,
+    GetAllPiquete,
+    GetPiqueteByID,
+    InsertPiquete,
+    UpdatePiquete,
+    DeletePiquete
 };
