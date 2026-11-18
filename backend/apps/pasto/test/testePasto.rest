@@ -1,0 +1,52 @@
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "girl",
+    "password": "girl"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.$.token}}
+
+
+POST http://localhost:40000/insertPasto HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "nomePasto": "Pasto A",
+    "areatotal": 1500.0
+}
+
+### teste de buscar todos os pastos
+GET http://localhost:40000/getAllPastos HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+
+}
+
+### teste de buscar pasto por ID
+GET http://localhost:40000/getPastoByID/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### teste de atualizar o pasto
+PUT http://localhost:40000/updatePasto/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "nomePasto": "Pasto AB",
+    "areatotal": 1500.0
+}
+
+### teste de atualização de pasto
+DELETE http://localhost:40000/deletePasto/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
