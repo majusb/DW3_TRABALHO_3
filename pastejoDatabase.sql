@@ -52,3 +52,21 @@ CREATE TABLE IF NOT EXISTS pasto(
 -- Inserção em pasto
 INSERT INTO pasto (nomePasto, areatotal) VALUES ('Pasto A', 1000.0),
                                                 ('Pasto B', 50.0);
+
+-- Piquete
+CREATE TABLE IF NOT EXISTS piquete(
+    piqueteid BIGSERIAL,
+    descricao VARCHAR(100),
+    latitude REAL,
+    longitude REAL,
+    pastoidfk BIGINT,
+    removido BOOLEAN DEFAULT false,
+    CONSTRAINT pk_piquete PRIMARY KEY (piqueteid),
+    CONSTRAINT fk_pasto FOREIGN KEY (pastoidfk) REFERENCES pasto(pastoid)
+)
+
+-- Inserção em piquete
+INSERT INTO piquete (descricao, latitude, longitude, pastoidfk) VALUES
+('Piquete 1', -23.5505, -46.6333, 1),
+('Piquete 2', -23.5510, -46.6340, 1),
+('Piquete 3', -23.5520, -46.6350, 2);

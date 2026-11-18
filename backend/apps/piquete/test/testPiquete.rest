@@ -1,4 +1,3 @@
-### NecessÆriopara pegarotoken
 ### Post
 # @name loginAutenticado
 POST http://localhost:40000/Login HTTP/1.1
@@ -12,17 +11,14 @@ content-type: application/json
 ### Seta o token
 @accessToken = {{loginAutenticado.response.body.$.token}}
 
-### teste de inserção de  medico 
+### teste de inserção de piquete
 POST http://localhost:40000/insertPiquete HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-    "crm": "12212",
-    "nomeMedico": "Roberto Mirando",
-    "telefone": "(17)12345-6789",
-    "especialidade": "Oftalmologista",
-    "deleted": false
+    "nomePasto": "Pasto 1",
+    "areatotal": 120.0
 }
 
 ### teste de buscar todos os medicos
