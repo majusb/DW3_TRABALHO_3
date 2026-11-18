@@ -1,8 +1,4 @@
--- Banco de dados: pastejo  (DW3 - Trabalho 3 - Pastejo Rotacionado)
--- 1) Crie o banco:  CREATE DATABASE pastejo;
--- 2) Conecte nele e rode este script.
-
--- Tabela de login (obrigatória, não conta nas 4 tabelas)
+-- Tabela de login
 CREATE TABLE IF NOT EXISTS usuarios (
     usuarioId BIGSERIAL,
     username VARCHAR(50) UNIQUE,
@@ -13,7 +9,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
--- usuário de teste: login girl / senha girl
+-- usuário de teste
 INSERT INTO usuarios (usuarioId, username, password)
 VALUES (default, 'girl', crypt('girl', gen_salt('bf')))
 ON CONFLICT DO NOTHING;
@@ -27,6 +23,7 @@ CREATE TABLE IF NOT EXISTS animal (
     CONSTRAINT pk_animal PRIMARY KEY (animalid)
 );
 
+-- Inserção animal
 INSERT INTO animal (nome, datanasc) VALUES
 ('Mimosa', '2022-03-15'),
 ('Estrela', '2021-08-02');
@@ -42,3 +39,16 @@ CREATE TABLE IF NOT EXISTS alocado (
     CONSTRAINT pk_alocado PRIMARY KEY (alocadoid),
     CONSTRAINT fk_animal FOREIGN KEY (animalidifk) REFERENCES animal(animalid)
 );
+
+-- Pasto
+CREATE TABLE IF NOT EXISTS pasto(
+    pastoid BIGSERIAL,
+    nomePasto VARCHAR(100),
+    areatotal REAL
+    removido BOOLEAN DEFAULT false
+    CONSTRAINT pk_pastoid PRIMARY KEY (pastoid)
+)
+
+-- Inserção em pasto
+INSERT INTO pasto (nomePasto, areatotal) VALUES ('Pasto A', 1000.0),
+                                                ('Pasto B', 50.0);

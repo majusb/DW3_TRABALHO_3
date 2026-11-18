@@ -33,4 +33,7 @@ const appLogin = require("../apps/login/controller/ctlLogin");
     routerApp.post("/Logout", appLogin.Logout);
 
 
+    //rota Piquete
+
+    //rota Pasto
     module.exports = routerApp;
