@@ -4,6 +4,10 @@
     const router = require('./routes/router');
     const app = express(); const port = 40000;
 
+    // Guarda global: impede que um erro nao tratado (ex: falha de consulta no banco) derrube o backend inteiro.
+    process.on('unhandledRejection', (err) => console.error('Erro nao tratado (promise):', err));
+    process.on('uncaughtException', (err) => console.error('Erro nao tratado (excecao):', err));
+
 
     app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');

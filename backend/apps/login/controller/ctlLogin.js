@@ -7,26 +7,32 @@ const mdlLogin = require("../model/mdlLogin");
 
 //-- POST /Login  -> corpo: { "username": "girl", "password": "girl" }
 const Login = async (req, res, next) => {
-  // 1) procura o usuário no banco
-  const credencial = await mdlLogin.GetCredencial(req.body.username);
+  try {
+    // 1) procura o usuário no banco
+    const credencial = await mdlLogin.GetCredencial(req.body.username);
 
-  if (credencial.length == 0) {
-    return res.status(403).json({ message: "Usuário não identificado!" });
+    if (credencial.length == 0) {
+      return res.status(403).json({ message: "Usuário não identificado!" });
+    }
+
+    // 2) compara a senha digitada com o hash bcrypt gravado pelo pastejoDatabase.sql
+    //    (crypt('girl', gen_salt('bf')) no Postgres gera um hash compatível com bcryptjs)
+    if (bCrypt.compareSync(req.body.password, credencial[0].password)) {
+      //auth ok
+      // 3) gera o token JWT: payload { username }, assinado com SECRET_API
+      const username = credencial[0].username;
+      const token = jwt.sign({ username }, process.env.SECRET_API, {
+        expiresIn: 120 * 60, //@ Expira em 02 horas (a apostila usa 600 = 10 min)
+      });
+      return res.json({ auth: true, token: token });
+    }
+
+    res.status(403).json({ message: "Login inválido!" });
+  } catch (err) {
+    // sem isto, um erro de banco (ex: conexao/senha) derrubava o backend inteiro
+    console.error("Erro no login:", err);
+    res.status(500).json({ message: "Erro no servidor ao fazer login: " + err.message });
   }
-
-  // 2) compara a senha digitada com o hash bcrypt gravado pelo pastejoDatabase.sql
-  //    (crypt('girl', gen_salt('bf')) no Postgres gera um hash compatível com bcryptjs)
-  if (bCrypt.compareSync(req.body.password, credencial[0].password)) {
-    //auth ok
-    // 3) gera o token JWT: payload { username }, assinado com SECRET_API
-    const username = credencial[0].username;
-    const token = jwt.sign({ username }, process.env.SECRET_API, {
-      expiresIn: 120 * 60, //@ Expira em 02 horas (a apostila usa 600 = 10 min)
-    });
-    return res.json({ auth: true, token: token });
-  }
-
-  res.status(403).json({ message: "Login inválido!" });
 };
 
 //-- MIDDLEWARE usado nas rotas protegidas: verifica o cabeçalho "Authorization: Bearer <token>"
