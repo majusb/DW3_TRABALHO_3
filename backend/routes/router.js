@@ -5,6 +5,8 @@ const routerApp = express.Router();
 const appAnimal = require("../apps/animal/controller/ctlAnimal");
 const appAlocado = require("../apps/alocado/controller/ctlAlocado");
 const appLogin = require("../apps/login/controller/ctlLogin");
+const appPiquete = require("../apps/piquete/controller/ctlPiquete");
+const appPasto = require("../apps/pasto/controller/ctlPasto");
 
     routerApp.use((req, res, next) => {
     next();
@@ -34,6 +36,17 @@ const appLogin = require("../apps/login/controller/ctlLogin");
 
 
     //rota Piquete
+    routerApp.get("/getAllPiquetes", appLogin.AutenticaJWT, appPiquete.GetAllPiquetes);
+    routerApp.get("/getPiqueteByID/:piquetoid", appLogin.AutenticaJWT, appPiquete.GetPiqueteByID);
+    routerApp.post("/insertPiquete", appLogin.AutenticaJWT, appPiquete.InsertPiquete);
+    routerApp.put("/updatePiquete/:piquetoid", appLogin.AutenticaJWT, appPiquete.UpdatePiquete);
+    routerApp.delete("/deletePiquete/:piqueteid", appLogin.AutenticaJWT, appPiquete.DeletePiquete);
 
     //rota Pasto
+    routerApp.get("/getAllPastos", appLogin.AutenticaJWT, appPasto.GetAllPastos);
+    routerApp.get("/getPastoByID/:pastoid", appLogin.AutenticaJWT, appPasto.GetPastoByID);
+    routerApp.post("/insertPasto", appLogin.AutenticaJWT, appPasto.InsertPasto);
+    routerApp.put("/updatePasto/:pastoid", appLogin.AutenticaJWT, appPasto.UpdatePasto);
+    routerApp.delete("/deletePasto/:pastoid", appLogin.AutenticaJWT, appPasto.DeletePasto);
+
     module.exports = routerApp;

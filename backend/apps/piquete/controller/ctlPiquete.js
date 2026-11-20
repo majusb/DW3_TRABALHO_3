@@ -1,6 +1,6 @@
     const mdlPiquete = require("../model/mdlPiquete");
 
-    const GetAllPiquete = (req, res) =>
+    const GetAllPiquetes = (req, res) =>
     (async () => {
         let registro = await mdlPiquete.GetAllPiquete();
         res.json({ status: "ok", "registro": registro });
@@ -37,7 +37,7 @@
     })();
 
     module.exports = {
-    GetAllPiquete,
+    GetAllPiquetes,
     GetPiqueteByID,
     InsertPiquete,
     UpdatePiquete,
