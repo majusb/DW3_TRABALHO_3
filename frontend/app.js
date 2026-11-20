@@ -9,6 +9,8 @@
     var homeRouter = require('./routes/rtHome');
     var animalRouter = require('./routes/rtAnimal');
     var alocadoRouter = require('./routes/rtAlocado');
+    var piqueteRouter = require('./routes/rtPiquete');
+    var pastoRouter = require('./routes/rtPasto');
 
     // Configura o carregamento de variáveis de ambiente a partir do arquivo 'dw3frontend.env', permitindo que a aplicação acesse configurações sensíveis como URLs de servidores e credenciais
     require('dotenv').config({ path: path.join(__dirname, 'dw3frontend.env'), quiet: true });
@@ -42,7 +44,8 @@
     app.use('/home', homeRouter);
     app.use('/animal', animalRouter);
     app.use('/alocado', alocadoRouter);
-
+    app.use('/piquete', piqueteRouter);
+    app.use('/pasto', pastoRouter);
 
 // Configura o tratamento de erros, incluindo a captura de erros 404 (página não encontrada) e a renderização de uma página de erro personalizada com informações sobre o erro ocorrido
     app.use(function(req, res, next) {
