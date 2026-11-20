@@ -1,0 +1,50 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+  <header class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+    <div>
+      <p class="page-kicker text-primary fw-semibold mb-1">Gerenciamento</p>
+      <h1 class="h3 fw-bold mb-0">Pasto</h1>
+    </div>
+    <a class="btn btn-outline-secondary" href="/pasto">
+      <i class="bi bi-arrow-left me-1"></i>Voltar
+    </a>
+  </header>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+      <form id="frmPasto" data-servidor-dw3="{{ servidorTrabalho }}">
+        <input type="hidden" id="pastoid" name="pastoid">
+        <input type="hidden" id="removido" name="removido" value="false">
+
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label for="nomePasto" class="form-label">Nome do Pasto</label>
+            <input type="text" class="form-control" id="nomePasto" name="nomePasto" placeholder="Ex: Pasto Santa Rita" required maxlength="100">
+          </div>
+          
+          <div class="col-md-4">
+            <label for="areatotal" class="form-label">Área Total</label>
+            <input type="number" step="0.01" min="0" class="form-control" id="areatotal" name="areatotal" placeholder="Ex: 15.5" required>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+          <button type="button" id="btnInserirPasto" class="btn btn-primary d-none">
+            <i class="bi bi-check-lg me-1"></i>Inserir
+          </button>
+          <button type="button" id="btnAtualizarPasto" class="btn btn-warning d-none">
+            <i class="bi bi-pencil-square me-1"></i>Atualizar
+          </button>
+          <button type="button" id="btnRemoverPasto" class="btn btn-danger d-none">
+            <i class="bi bi-trash me-1"></i>Remover
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="/apps/pasto/vwFormPasto.js"></script>
+{% endblock %}
