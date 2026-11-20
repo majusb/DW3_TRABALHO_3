@@ -1,9 +1,9 @@
 const db = require("../../../database/databaseconfig");
 
-const GetAllPiquete = async () => {
+const GetAllPiquetes = async () => {
     return (
         await db.query(
-            "SELECT * FROM piquete WHERE deleted = false ORDER BY descricao ASC"
+            "SELECT * FROM piquete WHERE removido = false ORDER BY descricao ASC"
         )
     ).rows;
 };
@@ -11,7 +11,7 @@ const GetAllPiquete = async () => {
 const GetPiqueteByID = async (piqueteIDPar) => {
     return (
         await db.query(
-            "SELECT * FROM piquete WHERE idPiquete = $1 AND deleted = false ORDER BY descricao ASC",
+            "SELECT * FROM piquete WHERE piqueteid = $1 AND removido = false ORDER BY descricao ASC",
             [piqueteIDPar]
         )
     ).rows;
@@ -23,13 +23,13 @@ const InsertPiquete = async (piqueteREGPar) => {
     try {
         linhasAfetadas = (
             await db.query(
-                "INSERT INTO piquete VALUES (default, $1, $2, $3, $4, $5)",
+                "INSERT INTO piquete (descricao, latitude, longitude, pastoidfk, removido) VALUES ($1, $2, $3, $4, $5)",
                 [
                     piqueteREGPar.descricao,
                     piqueteREGPar.latitude,
                     piqueteREGPar.longitude,
-                    piqueteREGPar.pastoId,
-                    piqueteREGPar.deleted
+                    piqueteREGPar.pastoidfk,
+                    piqueteREGPar.removido
                 ]
             )
         ).rowCount;
@@ -51,16 +51,16 @@ const UpdatePiquete = async (piqueteIDPar, piqueteREGPar) => {
                 "descricao = $2, " +
                 "latitude = $3, " +
                 "longitude = $4, " +
-                "pastoId = $5, " +
-                "deleted = $6 " +
-                "WHERE idPiquete = $1",
+                "pastoidfk = $5, " +
+                "removido = $6 " +
+                "WHERE piqueteid = $1",
                 [
                     piqueteIDPar,
                     piqueteREGPar.descricao,
                     piqueteREGPar.latitude,
                     piqueteREGPar.longitude,
-                    piqueteREGPar.pastoId,
-                    piqueteREGPar.deleted,
+                    piqueteREGPar.pastoidfk,
+                    piqueteREGPar.removido,
                 ]
             )
         ).rowCount;
@@ -79,7 +79,7 @@ const DeletePiquete = async (piqueteIDPar) => {
     try {
         linhasAfetadas = (
             await db.query(
-                "UPDATE piquete SET deleted = true WHERE idPiquete = $1",
+                "UPDATE piquete SET removido = true WHERE piqueteid = $1",
                 [piqueteIDPar]
             )
         ).rowCount;
@@ -92,7 +92,7 @@ const DeletePiquete = async (piqueteIDPar) => {
 };
 
 module.exports = {
-    GetAllPiquete,
+    GetAllPiquetes,
     GetPiqueteByID,
     InsertPiquete,
     UpdatePiquete,

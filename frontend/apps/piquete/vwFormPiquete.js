@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     var btnAtualizar = document.getElementById('btnAtualizarPiquete');
     var btnRemover = document.getElementById('btnRemoverPiquete');
 
+    await carregarComboPastos(servidorDw3);
+
     if (oper === 'Cr') {
         if (btnInserir) {
             btnInserir.classList.remove('d-none');
@@ -52,9 +54,43 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
+
+async function carregarComboPastos(servidorDw3) {
+    try {
+        var selectPasto = document.getElementById('pastoidfk');
+        if (!selectPasto) {
+            return;
+        }
+
+        var response = await fetch(servidorDw3 + '/getAllPastos', {
+            headers: dw3MontarHeadersAutenticacao({
+                'content-type': 'application/json'
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Não foi possível carregar a lista de pastos.');
+        }
+
+        var data = await response.json();
+
+        if (data.status === 'ok' && Array.isArray(data.registro)) {
+            selectPasto.innerHTML = '<option value="">Selecione um pasto...</option>';
+            data.registro.forEach(function(pasto) {
+                var option = document.createElement('option');
+                option.value = pasto.pastoid;
+                option.text = pasto.nomepasto;
+                selectPasto.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Erro ao carregar combo de pastos:', error);
+    }
+}
+
 function montarPiqueteFormulario() {
     return {
-        idPiquete: document.getElementById('idPiquete').value,
+        piqueteid: document.getElementById('idPiquete').value,
         descricao: document.getElementById('descricao').value,
         latitude: document.getElementById('latitude').value,
         longitude: document.getElementById('longitude').value,
@@ -63,13 +99,27 @@ function montarPiqueteFormulario() {
     };
 }
 
-
 async function vwInsertPiquete() {
     var form = document.getElementById('frmPiquete');
     var btnInserir = document.getElementById('btnInserirPiquete');
 
     try {
         if (!form.reportValidity()) {
+            return;
+        }
+
+        var latitude = parseFloat(document.getElementById('latitude').value);
+        var longitude = parseFloat(document.getElementById('longitude').value);
+
+        if (isNaN(latitude) || latitude < -90 || latitude > 90) {
+            alert('A latitude deve ser um valor numérico entre -90 e 90.');
+            document.getElementById('latitude').focus();
+            return;
+        }
+
+        if (isNaN(longitude) || longitude < -180 || longitude > 180) {
+            alert('A longitude deve ser um valor numérico entre -180 e 180.');
+            document.getElementById('longitude').focus();
             return;
         }
 
@@ -180,6 +230,21 @@ async function vwUpdatePiquete() {
     }
 
     try {
+        var latitude = parseFloat(document.getElementById('latitude').value);
+        var longitude = parseFloat(document.getElementById('longitude').value);
+
+        if (isNaN(latitude) || latitude < -90 || latitude > 90) {
+            alert('A latitude deve ser um valor numérico entre -90 e 90.');
+            document.getElementById('latitude').focus();
+            return;
+        }
+
+        if (isNaN(longitude) || longitude < -180 || longitude > 180) {
+            alert('A longitude deve ser um valor numérico entre -180 e 180.');
+            document.getElementById('longitude').focus();
+            return;
+        }
+
         var idPiquete = new URLSearchParams(window.location.search).get('idPiquete');
         var servidorDw3 = form.dataset.servidorDw3;
 
@@ -194,7 +259,7 @@ async function vwUpdatePiquete() {
         btnAtualizar.disabled = true;
 
         var piquete = montarPiqueteFormulario();
-        piquete.idPiquete = Number(idPiquete);
+        piquete.piqueteid = Number(idPiquete);
 
         var response = await fetch(servidorDw3 + '/updatePiquete/' + encodeURIComponent(idPiquete), {
             method: 'PUT',

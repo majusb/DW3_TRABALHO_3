@@ -24,7 +24,7 @@ async function carregarPasto(servidorDw3, alertBox) {
 
         var token = localStorage.getItem('jwt') || localStorage.getItem('token');
 
-        var response = await fetch(servidorDw3 + '/getAllPasto', {
+        var response = await fetch(servidorDw3 + '/getAllPastos', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ function inicializarTabelaPasto(pasto) {
     new DataTable('#tblPasto', {
         data: pasto,
         columns: [
-            { data: 'idpasto', defaultContent: '' },
+            { data: 'pastoid', defaultContent: '' },
             { data: 'nomepasto', defaultContent: '' },
             { data: 'areatotal', defaultContent: '' },
             {
@@ -65,7 +65,7 @@ function inicializarTabelaPasto(pasto) {
                         return '';
                     }
 
-                    var idPasto = escaparHtml(row.idpasto || '');
+                    var idPasto = escaparHtml(row.pastoid || '');
 
                     return [
                         '<div class="btn-group btn-group-sm" role="group" aria-label="Operacoes do Pasto">',

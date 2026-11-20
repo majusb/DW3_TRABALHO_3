@@ -62,14 +62,14 @@ async function carregarSelects(servidorDw3) {
     }
 
     try {
-        var animais = await buscarListaFormAlocado(servidorDw3, '/getAllAnimal');
+        var animais = await buscarListaFormAlocado(servidorDw3, '/getAllAnimais');
         preencherSelectAlocado('animalidifk', animais, 'animalid', 'nome');
     } catch (error) {
         console.error('Não foi possível carregar os animais.', error);
     }
 
     try {
-        var piquetes = await buscarListaFormAlocado(servidorDw3, '/getAllPiquete');
+        var piquetes = await buscarListaFormAlocado(servidorDw3, '/getAllPiquetes');
         preencherSelectAlocado('piqueteidfk', piquetes, 'piqueteid', 'descricao');
     } catch (error) {
         console.error('Não foi possível carregar os piquetes.', error);
@@ -77,13 +77,10 @@ async function carregarSelects(servidorDw3) {
 }
 
 async function buscarListaFormAlocado(servidorDw3, rota) {
-    var token = localStorage.getItem('token');
-
     var response = await fetch(servidorDw3 + rota, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        }
+        headers: dw3MontarHeadersAutenticacao({
+            'content-type': 'application/json'
+        })
     });
 
     if (!response.ok) {
@@ -91,6 +88,10 @@ async function buscarListaFormAlocado(servidorDw3, rota) {
     }
 
     var data = await response.json();
+
+    if (data.auth === false) {
+        throw new Error(data.message || 'Sessão expirada.');
+    }
 
     if (data.status !== 'ok' || !Array.isArray(data.registro)) {
         throw new Error('Resposta inválida do servidor backend.');
@@ -116,7 +117,7 @@ function preencherSelectAlocado(idSelect, lista, campoValor, campoTexto) {
 
 function montarAlocadoFormulario() {
     return {
-        idAlocado: document.getElementById('idAlocado').value,
+        alocadoid: document.getElementById('idAlocado').value,
         animalidifk: document.getElementById('animalidifk').value,
         piqueteidfk: document.getElementById('piqueteidfk').value,
         datainicio: document.getElementById('datainicio').value,

@@ -14,18 +14,20 @@
   <div class="card border-0 shadow-sm">
     <div class="card-body p-4">
       <form id="frmPasto" data-servidor-dw3="{{ servidorTrabalho }}">
-        <input type="hidden" id="pastoid" name="pastoid">
+        <!-- CORRIGIDO: id alterado para 'idPasto' -->
+        <input type="hidden" id="idPasto" name="pastoid">
         <input type="hidden" id="removido" name="removido" value="false">
 
         <div class="row g-3">
           <div class="col-md-8">
             <label for="nomePasto" class="form-label">Nome do Pasto</label>
-            <input type="text" class="form-control" id="nomePasto" name="nomePasto" placeholder="Ex: Pasto Santa Rita" required maxlength="100">
+            <input type="text" class="form-control" id="nomePasto" name="nomePasto"  required maxlength="100">
           </div>
           
           <div class="col-md-4">
-            <label for="areatotal" class="form-label">Área Total</label>
-            <input type="number" step="0.01" min="0" class="form-control" id="areatotal" name="areatotal" placeholder="Ex: 15.5" required>
+            <label for="areaTotal" class="form-label">Área Total</label>
+            <!-- CORRIGIDO: id alterado para 'areaTotal' (com T maiúsculo) -->
+            <input type="number" step="0.01" min="0" class="form-control" id="areaTotal" name="areatotal"  required>
           </div>
         </div>
 

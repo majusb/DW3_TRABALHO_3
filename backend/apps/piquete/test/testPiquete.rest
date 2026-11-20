@@ -22,7 +22,8 @@ Authorization: Bearer {{accessToken}}
     "descricao": "Piquete 1",
     "latitude": 100.0,
     "longitude": 50.0,
-    "pastoId": 1,
+    "pastoidfk": 1,
+    "removido": false
 }
 
 ### teste de buscar todos os piquetes
@@ -49,10 +50,11 @@ Authorization: Bearer {{accessToken}}
     "descricao": "Piquete 1",
     "latitude": 100.0,
     "longitude": 50.0,
-    "pastoId": 1
+    "pastoidfk": 1,
+    "removido": false
 }
 
-### teste de atualização de medico
-DELETE http://localhost:40000/deleteMedico/1 HTTP/1.1
+### teste de exclusão de piquete
+DELETE http://localhost:40000/deletePiquete/1 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{accessToken}}

@@ -22,12 +22,11 @@ async function carregarAlocado(servidorDw3, alertBox) {
             throw new Error('Endereço do servidor backend não configurado.');
         }
 
-        var alocados = await buscarListaAlocado(servidorDw3, '/getAllAlocado');
+        var alocados = await buscarListaAlocado(servidorDw3, '/getAllAlocados');
 
-        // animal e piquete servem só para mostrar o nome no lugar do id
         var mapaAnimal = {};
         try {
-            var animais = await buscarListaAlocado(servidorDw3, '/getAllAnimal');
+            var animais = await buscarListaAlocado(servidorDw3, '/getAllAnimais');
             animais.forEach(function(a) {
                 mapaAnimal[a.animalid] = a.nome;
             });
@@ -37,7 +36,7 @@ async function carregarAlocado(servidorDw3, alertBox) {
 
         var mapaPiquete = {};
         try {
-            var piquetes = await buscarListaAlocado(servidorDw3, '/getAllPiquete');
+            var piquetes = await buscarListaAlocado(servidorDw3, '/getAllPiquetes');
             piquetes.forEach(function(p) {
                 mapaPiquete[p.piqueteid] = p.descricao;
             });

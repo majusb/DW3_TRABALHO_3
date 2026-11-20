@@ -3,7 +3,7 @@ const db = require("../../../database/databaseconfig");
 const GetAllPastos = async () => {
     return (
         await db.query(
-            "SELECT * FROM pasto WHERE deleted = false ORDER BY nomePasto ASC"
+            "SELECT * FROM pasto WHERE removido = false ORDER BY nomePasto ASC"
         )
     ).rows;
 };
@@ -11,7 +11,7 @@ const GetAllPastos = async () => {
 const GetPastoByID = async (pastoIDPar) => {
     return (
         await db.query(
-            "SELECT * FROM pasto WHERE idPasto = $1 AND deleted = false ORDER BY nomePasto ASC",
+            "SELECT * FROM pasto WHERE pastoid = $1 AND removido = false ORDER BY nomePasto ASC",
             [pastoIDPar]
         )
     ).rows;
@@ -23,10 +23,11 @@ const InsertPasto = async (pastoREGPar) => {
     try {
         linhasAfetadas = (
             await db.query(
-                "INSERT INTO pasto VALUES (default, $1, $2)",
+                "INSERT INTO pasto VALUES (default, $1, $2, $3)",
                 [
-                    pastoREGPar.nomePasto,
-                    pastoREGPar.areatotal
+                    pastoREGPar.nomepasto,
+                    pastoREGPar.areatotal,
+                    pastoREGPar.removido
                 ]
             )
         ).rowCount;
@@ -45,15 +46,15 @@ const UpdatePasto = async (pastoIDPar, pastoREGPar) => {
         linhasAfetadas = (
             await db.query(
                 "UPDATE pasto SET " +
-                "nomePasto = $2, " +
-                "areatotal = $3 " +
-                "deleted = $4 " +
+                "nomepasto = $2, " +
+                "areatotal = $3, " +
+                "removido = $4 " +
                 "WHERE pastoid = $1",
                 [
                     pastoIDPar,
-                    pastoREGPar.nomePasto,
+                    pastoREGPar.nomepasto,
                     pastoREGPar.areatotal,
-                    pastoREGPar.deleted,
+                    pastoREGPar.removido,
                 ]
             )
         ).rowCount;
@@ -72,7 +73,7 @@ const DeletePasto = async (pastoIDPar) => {
     try {
         linhasAfetadas = (
             await db.query(
-                "UPDATE pasto SET deleted = true WHERE pastoid = $1",
+                "UPDATE pasto SET removido = true WHERE pastoid = $1",
                 [pastoIDPar]
             )
         ).rowCount;

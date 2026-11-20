@@ -2,13 +2,13 @@
 
     const GetAllPiquetes = (req, res) =>
     (async () => {
-        let registro = await mdlPiquete.GetAllPiquete();
+        let registro = await mdlPiquete.GetAllPiquetes();
         res.json({ status: "ok", "registro": registro });
     })();
 
     const GetPiqueteByID = (req, res) =>
     (async () => {
-        const idPiquete = parseInt(req.params.piquetoid);
+        const idPiquete = parseInt(req.params.piqueteid);
         let registro = await mdlPiquete.GetPiqueteByID(idPiquete);
 
         res.json({ status: "ok", "registro": registro });
@@ -23,7 +23,7 @@
 
     const UpdatePiquete = (request, res) =>
     (async () => {
-        const idPiquete = parseInt(request.params.piquetoid);
+        const idPiquete = parseInt(request.params.piqueteid);
         const piqueteREG = request.body;
         let { msg, linhasAfetadas } = await mdlPiquete.UpdatePiquete(idPiquete, piqueteREG);
         res.json({ "status": msg, "linhasAfetadas": linhasAfetadas });

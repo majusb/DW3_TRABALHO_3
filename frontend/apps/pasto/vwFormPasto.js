@@ -54,11 +54,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 function montarPastoFormulario() {
     return {
-        idPasto: document.getElementById('idPasto').value,
-        nomePasto: document.getElementById('nomePasto').value,
-        descricao: document.getElementById('descricao').value,
-        area: document.getElementById('area').value,
-        deleted: document.getElementById('deleted').value === 'true'
+        pastoid: document.getElementById('idPasto').value,
+        nomepasto: document.getElementById('nomePasto').value,
+        areatotal: document.getElementById('areaTotal').value,
+        removido: document.getElementById('removido').value === 'true'
     };
 }
 
@@ -156,11 +155,10 @@ async function vwGetPastoByID() {
             throw new Error('Pasto não encontrado.');
         }
 
-        // Ajustado para capturar as propriedades em minúsculas retornadas pelo Postgres, igual ao paciente
-        document.getElementById('idPasto').value = pasto.idpasto;
+        document.getElementById('idPasto').value = pasto.pastoid;
         document.getElementById('nomePasto').value = pasto.nomepasto ?? '';
         document.getElementById('areaTotal').value = pasto.areatotal ?? '';
-        document.getElementById('deleted').value = String(pasto.deleted === true);
+        document.getElementById('removido').value = String(pasto.removido === true);
 
         return true;
     } catch (error) {
@@ -192,7 +190,7 @@ async function vwUpdatePasto() {
         btnAtualizar.disabled = true;
 
         var pasto = montarPastoFormulario();
-        pasto.idPasto = Number(idPasto);
+        pasto.pastoid = Number(idPasto);
 
         var response = await fetch(servidorDw3 + '/updatePasto/' + encodeURIComponent(idPasto), {
             method: 'PUT',

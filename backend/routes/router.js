@@ -17,14 +17,14 @@ const appPasto = require("../apps/pasto/controller/ctlPasto");
     });
 
     //@ Rotas de Animal
-    routerApp.get("/getAllAnimal", appLogin.AutenticaJWT, appAnimal.GetAllAnimal);
+    routerApp.get("/getAllAnimais", appLogin.AutenticaJWT, appAnimal.GetAllAnimal);
     routerApp.get("/getAnimalByID/:animalid", appLogin.AutenticaJWT, appAnimal.GetAnimalByID);
     routerApp.post("/insertAnimal", appLogin.AutenticaJWT, appAnimal.InsertAnimal);
     routerApp.put("/updateAnimal/:animalid", appLogin.AutenticaJWT, appAnimal.UpdateAnimal);
     routerApp.delete("/deleteAnimal/:animalid", appLogin.AutenticaJWT, appAnimal.DeleteAnimal);
 
     //@ Rotas de Alocado
-    routerApp.get("/getAllAlocado", appLogin.AutenticaJWT, appAlocado.GetAllAlocado);
+    routerApp.get("/getAllAlocados", appLogin.AutenticaJWT, appAlocado.GetAllAlocado);
     routerApp.get("/getAlocadoByID/:alocadoid", appLogin.AutenticaJWT, appAlocado.GetAlocadoByID);
     routerApp.post("/insertAlocado", appLogin.AutenticaJWT, appAlocado.InsertAlocado);
     routerApp.put("/updateAlocado/:alocadoid", appLogin.AutenticaJWT, appAlocado.UpdateAlocado);
@@ -37,9 +37,9 @@ const appPasto = require("../apps/pasto/controller/ctlPasto");
 
     //rota Piquete
     routerApp.get("/getAllPiquetes", appLogin.AutenticaJWT, appPiquete.GetAllPiquetes);
-    routerApp.get("/getPiqueteByID/:piquetoid", appLogin.AutenticaJWT, appPiquete.GetPiqueteByID);
+    routerApp.get("/getPiqueteByID/:piqueteid", appLogin.AutenticaJWT, appPiquete.GetPiqueteByID);
     routerApp.post("/insertPiquete", appLogin.AutenticaJWT, appPiquete.InsertPiquete);
-    routerApp.put("/updatePiquete/:piquetoid", appLogin.AutenticaJWT, appPiquete.UpdatePiquete);
+    routerApp.put("/updatePiquete/:piqueteid", appLogin.AutenticaJWT, appPiquete.UpdatePiquete);
     routerApp.delete("/deletePiquete/:piqueteid", appLogin.AutenticaJWT, appPiquete.DeletePiquete);
 
     //rota Pasto
