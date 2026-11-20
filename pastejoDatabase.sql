@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS alocado (
 CREATE TABLE IF NOT EXISTS pasto(
     pastoid BIGSERIAL,
     nomePasto VARCHAR(100),
-    areatotal REAL
-    removido BOOLEAN DEFAULT false
+    areatotal REAL,
+    removido BOOLEAN DEFAULT false,
     CONSTRAINT pk_pastoid PRIMARY KEY (pastoid)
 )
 
