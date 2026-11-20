@@ -24,7 +24,7 @@ async function carregarAnimal(servidorDw3, alertBox) {
 
         var token = localStorage.getItem('token');
 
-        var response = await fetch(servidorDw3 + '/getAllAnimal', {
+        var response = await fetch(servidorDw3 + '/getAllAnimais', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
