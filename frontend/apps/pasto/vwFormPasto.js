@@ -159,8 +159,7 @@ async function vwGetPastoByID() {
         // Ajustado para capturar as propriedades em minúsculas retornadas pelo Postgres, igual ao paciente
         document.getElementById('idPasto').value = pasto.idpasto;
         document.getElementById('nomePasto').value = pasto.nomepasto ?? '';
-        document.getElementById('localizacao').value = pasto.localizacao ?? '';
-        document.getElementById('telefone').value = pasto.telefone ?? '';
+        document.getElementById('areaTotal').value = pasto.areatotal ?? '';
         document.getElementById('deleted').value = String(pasto.deleted === true);
 
         return true;
