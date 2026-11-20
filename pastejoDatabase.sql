@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS pasto(
     areatotal REAL,
     removido BOOLEAN DEFAULT false,
     CONSTRAINT pk_pastoid PRIMARY KEY (pastoid)
-)
+);
 
 -- Inserção em pasto
 INSERT INTO pasto (nomePasto, areatotal) VALUES ('Pasto A', 1000.0),
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS piquete(
     removido BOOLEAN DEFAULT false,
     CONSTRAINT pk_piquete PRIMARY KEY (piqueteid),
     CONSTRAINT fk_pasto FOREIGN KEY (pastoidfk) REFERENCES pasto(pastoid)
-)
+);
 
 -- Inserção em piquete
 INSERT INTO piquete (descricao, latitude, longitude, pastoidfk) VALUES
