@@ -1,4 +1,4 @@
-<!-- views/layout.njk - molde das telas: barra lateral (sidebar), tema verde, Bootstrap e DataTables -->
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
@@ -13,10 +13,11 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body class="app-shell">
-  {% if showNavbar %}
-    <div class="app-layout">
+
+  <div class="{% if showNavbar %}app-layout{% else %}login-wrap{% endif %}">
+    {% if showNavbar %}
       <aside class="app-sidebar">
-        <a class="sidebar-brand" href="/home"><i class="bi bi-tree-fill"></i> Pastejo</a>
+        <a class="sidebar-brand" href="/home">Pastejo</a>
         <nav class="sidebar-nav">
           <a href="/animal" class="{% if activeMenu == 'Animal' %}active{% endif %}"><i class="bi bi-piggy-bank"></i> Animais</a>
           <a href="/alocado" class="{% if activeMenu == 'Alocado' %}active{% endif %}"><i class="bi bi-signpost-2"></i> Alocações</a>
@@ -25,21 +26,17 @@
         </nav>
         <a class="sidebar-sair" href="#" onclick="dw3ClearIsLoggedCookie(); window.location.href='/login'; return false;"><i class="bi bi-box-arrow-right"></i> Sair</a>
       </aside>
-      <div class="app-content">
-        <div class="content-inner">
-          {% block content %}{% endblock %}
-        </div>
-      </div>
-    </div>
-  {% else %}
-    <main class="login-wrap">
-      <div class="container py-5">
+    {% endif %}
+
+    <div class="{% if showNavbar %}app-content{% else %}container py-5{% endif %}">
+      <div class="{% if showNavbar %}content-inner{% endif %}">
+        <!-- BLOCO ÚNICO GLOBAL: Serve para o login, home, erros e todas as telas -->
         {% block content %}{% endblock %}
       </div>
-    </main>
-  {% endif %}
+    </div>
+  </div>
 
-  <!-- Bibliotecas comuns a todas as telas, carregadas ANTES dos scripts de cada página -->
+  <!-- Bibliotecas comuns a todas as telas -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
